@@ -1,56 +1,425 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My First Website</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EV Market Strategy Suite 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;800&family=Manrope:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0b1424;--tx:#f2ede4;--mu:#9aa3b2;--c1:#e6c987;--c2:#b8893f;--c3:#4fd1b5;--st:rgba(255,255,255,.14)}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--tx);font-family:Manrope,system-ui,sans-serif;line-height:1.6;overflow-x:hidden}
+h1,h2,h3,.logo{font-family:Sora,'Segoe UI',sans-serif}
+a{color:inherit;text-decoration:none}button{font-family:inherit}
 
-    <style>
-        body {
-            font-family: Arial;
-            background: #f1f5f9;
-            text-align: center;
-            margin: 0;
-        }
+/* ---------- INTRO ---------- */
+#intro{position:fixed;inset:0;z-index:999;background:radial-gradient(ellipse at 50% 100%,#101a30,#0b1424 65%);overflow:hidden;transition:opacity .8s,visibility .8s;animation:out .8s 9s forwards}
+@keyframes out{to{opacity:0;visibility:hidden}}
+#intro.done{opacity:0;visibility:hidden}
+.stars{position:absolute;inset:0;background:radial-gradient(1.5px 1.5px at 12% 20%,#fff,transparent),radial-gradient(1px 1px at 33% 60%,#9ff,transparent),radial-gradient(1.5px 1.5px at 55% 15%,#fff,transparent),radial-gradient(1px 1px at 78% 40%,#cbf,transparent),radial-gradient(1.5px 1.5px at 90% 75%,#fff,transparent),radial-gradient(1px 1px at 22% 85%,#9ff,transparent)}
+.ground{position:absolute;left:0;right:0;bottom:22%;height:2px;background:linear-gradient(90deg,transparent,var(--c1),transparent)}
+.pad{position:absolute;left:50%;bottom:calc(22% - 14px);width:340px;height:28px;margin-left:-170px;border-radius:50%;border:2px solid var(--c1);opacity:.3;transition:opacity .5s}
+#intro.charging .pad{opacity:1;border-color:var(--c3);animation:pulse 1.2s ease-in-out infinite}
+@keyframes pulse{50%{transform:scale(1.1)}}
+.charger{position:absolute;left:calc(50% + 190px);bottom:22%;width:26px;height:150px;border-radius:10px 10px 0 0;background:linear-gradient(#1a2a4a,#0c1424);border:1px solid var(--st);opacity:0;transition:opacity .6s}
+.charger::before{content:"";position:absolute;top:14px;left:6px;width:12px;height:12px;border-radius:50%;background:var(--c3)}
+#intro.show .charger{opacity:1}
+.beam{position:absolute;left:calc(50% + 40px);bottom:calc(22% + 78px);width:150px;height:3px;opacity:0;background:repeating-linear-gradient(90deg,var(--c3) 0 10px,transparent 10px 18px);background-size:18px 3px}
+#intro.charging .beam{opacity:1;animation:flow .5s linear infinite}
+@keyframes flow{to{background-position:18px 0}}
+.vehicle{position:absolute;left:50%;bottom:calc(22% + 6px);width:300px;margin-left:-150px;transform:translate3d(-120vw,-60px,0);filter:drop-shadow(0 0 18px rgba(230,201,135,.5))}
+#intro.fly .vehicle{animation:fly 1.7s cubic-bezier(.2,.8,.2,1) forwards}
+@keyframes fly{0%{transform:translate3d(-120vw,-60px,0) rotate(-6deg)}70%{transform:translate3d(10px,-18px,0) rotate(1deg)}100%{transform:translate3d(0,0,0)}}
+#intro.charging .vehicle{transform:translate3d(0,0,0);animation:hov 2s ease-in-out infinite}
+@keyframes hov{50%{transform:translate3d(0,-8px,0)}}
+#intro.takeoff .vehicle{animation:to 1.3s cubic-bezier(.6,0,.9,.4) forwards}
+@keyframes to{0%{transform:translate3d(0,0,0)}30%{transform:translate3d(20px,-30px,0) rotate(-8deg)}100%{transform:translate3d(120vw,-90vh,0) rotate(-22deg) scale(.5)}}
+.hud{position:absolute;left:50%;bottom:8%;transform:translateX(-50%);width:min(420px,86vw);text-align:center}
+.hud small{letter-spacing:.3em;color:var(--mu);font-size:.7rem;text-transform:uppercase;display:block;margin-bottom:8px}
+.pct{font-family:Sora,sans-serif;font-size:2.2rem;font-weight:700;color:var(--c1)}
+.bar{height:10px;border-radius:99px;background:rgba(255,255,255,.1);overflow:hidden;margin:8px 0;border:1px solid var(--st)}
+.bar i{display:block;height:100%;transform:scaleX(0);transform-origin:left;background:linear-gradient(90deg,var(--c2),var(--c1),var(--c3))}
+#skip{position:absolute;top:20px;right:20px;background:rgba(255,255,255,.08);border:1px solid var(--st);color:var(--tx);padding:8px 16px;border-radius:99px;cursor:pointer;font-size:.8rem}
 
-        header {
-            background: #172554;
-            color: white;
-            padding: 40px;
-        }
+/* ---------- BACKGROUND / GLASS ---------- */
+.bg{position:fixed;inset:0;z-index:-1;background:radial-gradient(900px 650px at 8% 0,rgba(70,110,200,.34),transparent 60%),radial-gradient(700px 600px at 95% 35%,rgba(79,209,181,.14),transparent 60%),radial-gradient(800px 600px at 100% 100%,rgba(184,137,63,.18),transparent 60%),linear-gradient(180deg,#0d1830,#0a1220)}
+.bg::after{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);background-size:64px 64px;-webkit-mask-image:radial-gradient(ellipse at center,#000 25%,transparent 75%);mask-image:radial-gradient(ellipse at center,#000 25%,transparent 75%)}
+.orb{position:absolute;width:520px;height:520px;border-radius:50%;background:radial-gradient(circle,rgba(79,209,181,.10),transparent 65%);top:40%;left:55%;animation:drift 20s ease-in-out infinite alternate}
+@keyframes drift{to{transform:translate3d(-260px,-120px,0)}}
+.glass{position:relative;background:linear-gradient(135deg,rgba(255,255,255,.17),rgba(255,255,255,.05) 45%,rgba(255,255,255,.1));border:1px solid rgba(255,255,255,.24);border-radius:22px;-webkit-backdrop-filter:blur(18px) saturate(165%);backdrop-filter:blur(18px) saturate(165%);box-shadow:0 20px 50px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.4),inset 0 -1px 0 rgba(255,255,255,.06)}
+.glass::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:linear-gradient(115deg,rgba(255,255,255,.2),transparent 32%)}
+.frame::after{display:none}.frame{-webkit-backdrop-filter:none;backdrop-filter:none;background:rgba(10,18,34,.82)}
+nav{position:fixed;top:14px;left:50%;transform:translateX(-50%);width:min(1100px,94vw);z-index:50;display:flex;align-items:center;justify-content:space-between;padding:10px 22px;border-radius:99px;background:rgba(10,16,32,.6);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid var(--st)}
+.logo{font-weight:900;letter-spacing:.12em}.logo span{color:var(--c1)}
+nav ul{display:flex;gap:22px;list-style:none;font-size:.85rem;color:var(--mu)}
+nav ul a:hover,nav ul a.act{color:var(--c1)}
+.battery{display:flex;align-items:center;gap:8px;font-size:.75rem;color:var(--c3);font-family:Sora,sans-serif;min-width:80px}
+.cell{width:38px;height:16px;border:2px solid var(--c3);border-radius:4px;padding:2px;position:relative}
+.cell::after{content:"";position:absolute;right:-6px;top:3px;width:3px;height:6px;background:var(--c3);border-radius:0 2px 2px 0}
+.cell i{display:block;height:100%;background:var(--c3);border-radius:1px;transform:scaleX(0);transform-origin:left}
 
-        main {
-            background: white;
-            margin: 50px auto;
-            padding: 40px;
-            max-width: 600px;
-            border-radius: 12px;
-        }
+/* ---------- SECTIONS ---------- */
+section{padding:110px 6vw 30px;max-width:1300px;margin:0 auto;position:relative;z-index:1}
+.tag{display:block;font-size:.8rem;color:var(--c1);margin-bottom:8px;letter-spacing:.08em}
+h2{font-size:clamp(1.6rem,3.6vw,2.6rem);margin-bottom:14px}
+.lead{color:var(--mu);max-width:640px;margin-bottom:30px}
+.grad{background:linear-gradient(90deg,var(--c1),var(--c2),var(--c3));-webkit-background-clip:text;background-clip:text;color:transparent}
+#home{min-height:100vh;display:flex;flex-direction:column;justify-content:center}
+#home h1{font-size:clamp(2.2rem,6.5vw,5rem);line-height:1.08;font-weight:900;margin:10px 0 20px}
+.cta{display:flex;gap:14px;flex-wrap:wrap;margin:26px 0 40px}
+.btn{display:inline-block;padding:13px 28px;border-radius:99px;font-weight:600;font-size:.9rem;transition:transform .25s,box-shadow .25s;border:1px solid var(--st);cursor:pointer;color:var(--tx);background:rgba(255,255,255,.04);text-align:center}
+.btn.p{background:linear-gradient(90deg,var(--c2),var(--c1));border:none;color:#1a1306;box-shadow:0 0 22px rgba(230,201,135,.3)}
+.btn:hover{transform:translateY(-3px);box-shadow:0 8px 26px rgba(230,201,135,.35)}
+.chips{display:flex;gap:16px;flex-wrap:wrap}
+.chip{padding:14px 26px;text-align:center}
+.chip b{display:block;font-family:Sora,sans-serif;font-size:1.8rem;color:var(--c1)}
+.chip span{font-size:.78rem;color:var(--mu)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:22px}
+.card{padding:28px;transition:transform .2s ease-out,border-color .3s}
+.card:hover{border-color:var(--c1)}
+.card .ic{font-size:1.9rem;margin-bottom:10px}
+.card h3{font-size:1.02rem;margin-bottom:6px}
+.card p{color:var(--mu);font-size:.9rem}
 
-        button {
-            background: blue;
-            color: white;
-            padding: 12px 25px;
-            border: none;
-            border-radius: 6px;
-        }
-    </style>
+/* ---------- VIZ ---------- */
+.tabs{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px}
+.tab{padding:11px 22px;border-radius:99px;background:rgba(255,255,255,.05);border:1px solid var(--st);color:var(--mu);cursor:pointer;font-size:.86rem;transition:.25s}
+.tab:hover{color:var(--tx)}
+.tab.on{background:linear-gradient(90deg,var(--c2),var(--c1));color:#1a1306;font-weight:600;border-color:transparent}
+.layout{display:grid;grid-template-columns:270px 1fr;gap:20px;align-items:start}
+.side{padding:22px;position:sticky;top:90px}
+.side h3{font-size:1rem;margin-bottom:6px}
+.side .q{color:var(--mu);font-size:.88rem;margin-bottom:14px}
+.side ul{list-style:none;font-size:.85rem;color:var(--mu);display:grid;gap:8px;margin-bottom:16px}
+.side li::before{content:"▹ ";color:var(--c1)}
+.side .btn{width:100%;padding:11px;font-size:.82rem}
+.frame{padding:10px;background:rgba(8,12,24,.8)}
+.fbar{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:4px 8px 10px;font-size:.82rem;color:var(--mu);flex-wrap:wrap}
+.ctl{display:flex;gap:8px;flex-wrap:wrap}
+.mini{background:rgba(255,255,255,.07);border:1px solid var(--st);color:var(--tx);padding:5px 12px;border-radius:99px;font-size:.74rem;cursor:pointer;display:inline-block}
+.mini:hover,.mini.on{border-color:var(--c1);color:var(--c1)}
+.stage{position:relative;height:var(--h,800px);border-radius:14px;overflow:hidden;background:#0a0f1d}
+.stage iframe{position:absolute;inset:0;width:100%;height:100%;border:0;background:#fff;opacity:0;transition:opacity .6s}
+.stage iframe.ready{opacity:1}
+.loader{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;color:var(--mu);font-size:.85rem;text-align:center;padding:20px;background:radial-gradient(circle at 50% 40%,#1a2236,#070b17)}
+.loader.off{display:none}
+.ring{width:44px;height:44px;border-radius:50%;border:3px solid rgba(255,255,255,.15);border-top-color:var(--c1);animation:rot .8s linear infinite}
+@keyframes rot{to{transform:rotate(360deg)}}
+.note{margin-top:10px;font-size:.78rem;color:var(--mu);text-align:center}
+.note a{color:var(--c1)}
+footer{text-align:center;padding:70px 6vw 50px;color:var(--mu);font-size:.85rem;position:relative;z-index:1}
+footer b,footer a{color:var(--c1);cursor:pointer}
+
+/* reveal: only hidden when JS runs */
+.js .rv{opacity:0;transform:translate3d(0,30px,0);transition:opacity .7s,transform .7s}
+.js .rv.in{opacity:1;transform:none}
+@media(max-width:900px){.layout{grid-template-columns:1fr}.side{position:static}}
+@media(max-width:760px){nav ul{display:none}.vehicle{width:230px;margin-left:-115px}.charger{left:calc(50% + 130px)}.pad{width:260px;margin-left:-130px}.stage{height:min(var(--h,800px),680px)}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.js .rv{opacity:1;transform:none}}
+
+/* finale: drive-in, arrive, fully charged */
+.finale{position:relative;height:150px;max-width:900px;margin:0 auto 10px;overflow:hidden;z-index:1}
+.road{position:absolute;left:0;right:0;bottom:34px;height:2px;background:linear-gradient(90deg,transparent,var(--c1),transparent);transform:scaleX(0);transform-origin:left;box-shadow:0 0 18px rgba(230,201,135,.5)}
+.car2{position:absolute;left:50%;bottom:31px;width:120px;margin-left:-60px;transform:translateX(-560px);filter:drop-shadow(0 0 12px rgba(230,201,135,.45))}
+.arr{position:absolute;left:50%;bottom:20px;width:150px;height:26px;margin-left:-75px;border-radius:50%;border:2px solid var(--c3);opacity:0}
+.fin-text{position:absolute;left:0;right:0;top:6px;text-align:center;font-family:Sora,sans-serif;font-size:.85rem;letter-spacing:.08em;color:var(--c3);opacity:0;transform:translateY(8px)}
+.finale.go .road{animation:rd 3s ease-out forwards}
+.finale.go .car2{animation:drive 3s cubic-bezier(.25,.8,.25,1) forwards}
+.finale.go .arr{animation:arr 1.4s 3s ease-out forwards}
+.finale.go .fin-text{animation:fin .8s 3.1s ease-out forwards}
+@keyframes rd{to{transform:scaleX(1)}}
+@keyframes drive{to{transform:translateX(0)}}
+@keyframes arr{0%{opacity:.9;transform:scale(.6)}100%{opacity:0;transform:scale(2.2)}}
+@keyframes fin{to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){.road{transform:none}.car2{transform:none}.fin-text{opacity:1;transform:none}}
+
+/* v4: hero visual, network animation, gallery */
+.orb.o2{top:5%;left:-8%;background:radial-gradient(circle,rgba(230,201,135,.13),transparent 65%);animation-duration:26s}
+#home{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center}
+.heroph{padding:12px;animation:bob 6s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-12px)}}
+.ph{position:relative;aspect-ratio:4/3;border-radius:14px;overflow:hidden;background:#0a1224}
+.ph svg{position:absolute;inset:0;width:100%;height:100%}
+.real{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .6s}
+.real.ok{opacity:1}
+.tagchip{position:absolute;left:28px;bottom:28px;padding:10px 16px;border-radius:14px;display:flex;align-items:center;gap:12px;font-size:.78rem;z-index:2}
+.mb{width:90px;height:8px;border-radius:99px;background:rgba(255,255,255,.15);overflow:hidden}
+.mb i{display:block;height:100%;background:linear-gradient(90deg,var(--c2),var(--c1),var(--c3));transform-origin:left;animation:mb 4s ease-in-out infinite}
+@keyframes mb{0%{transform:scaleX(.05)}80%,100%{transform:scaleX(1)}}
+.net{padding:18px 18px 14px}
+.net svg{width:100%;height:auto;display:block}
+.ncar{animation:ncar 9s linear infinite;animation-play-state:paused}
+.net.go .ncar,.net.go .flow,.net.go .rg,.net.go .led,.net.go .win,.net.go .mb i{animation-play-state:running}
+@keyframes ncar{from{transform:translateX(-140px)}to{transform:translateX(960px)}}
+.flow{animation:fl 1s linear infinite;animation-play-state:paused}
+@keyframes fl{to{stroke-dashoffset:-24}}
+.rg{animation:rg 2s ease-out infinite;animation-play-state:paused;transform-box:fill-box;transform-origin:center}
+@keyframes rg{0%{transform:scale(1);opacity:.9}100%{transform:scale(4);opacity:0}}
+.led{animation:led 1.4s ease-in-out infinite;animation-play-state:paused}
+@keyframes led{50%{opacity:.35}}
+.win{animation:tw 3s ease-in-out infinite alternate;animation-play-state:paused}
+@keyframes tw{from{opacity:.25}to{opacity:1}}
+.net .mb i{animation:mb 9s linear infinite;animation-play-state:paused}
+.netbar{display:flex;align-items:center;gap:14px;padding:6px 8px 0;font-size:.8rem;color:var(--mu)}
+.netbar .mb{flex:1;max-width:340px}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:22px}
+.gf{padding:10px;transition:transform .35s}
+.gf:hover{transform:translateY(-6px)}
+.gf .ph svg,.gf .real{transition:transform .8s}
+.gf:hover .ph svg,.gf:hover .real{transform:scale(1.06)}
+.gf figcaption{padding:12px 8px 4px;font-family:Sora,sans-serif;font-size:.9rem}
+@media(max-width:900px){ #home{grid-template-columns:1fr;padding-top:120px}}
+@media(prefers-reduced-motion:reduce){.ncar{transform:translateX(300px)}}
+</style>
+<script>document.documentElement.className='js'</script>
 </head>
-
 <body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="sA" viewBox="0 0 400 300"><defs><linearGradient id="gA" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#14264d"/><stop offset=".6" stop-color="#7a5a8c"/><stop offset="1" stop-color="#f0a95f"/></linearGradient></defs>
+<rect width="400" height="300" fill="url(#gA)"/><circle cx="290" cy="190" r="34" fill="#ffd9a0" opacity=".9"/>
+<path d="M0 220C60 190 120 200 180 215S320 205 400 195V300H0Z" fill="#101b33"/><rect y="238" width="400" height="62" fill="#0a1224"/>
+<rect x="258" y="170" width="22" height="70" rx="5" fill="#26365a"/><rect x="262" y="178" width="14" height="18" rx="2" fill="#4fd1b5"/><path d="M269 240c-4 18-30 20-52 30" stroke="#4fd1b5" stroke-width="3" fill="none"/>
+<g transform="translate(60,196) scale(.6)"><path d="M12 68C14 52 40 46 82 42 108 22 150 18 186 24 222 30 252 44 280 56 292 62 294 68 290 72L18 72C12 72 11 71 12 68Z" fill="#05080f"/><path d="M96 44C118 30 150 28 180 31 204 34 224 44 238 52L96 52Z" fill="#2a3b66"/><circle cx="72" cy="74" r="15" fill="#05080f" stroke="#e6c987" stroke-width="3"/><circle cx="228" cy="74" r="15" fill="#05080f" stroke="#e6c987" stroke-width="3"/><path d="M274 54L296 60L274 62Z" fill="#fff3c4"/></g></symbol>
+<symbol id="sB" viewBox="0 0 400 300"><defs><linearGradient id="gB" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0c1a38"/><stop offset="1" stop-color="#2f5c8f"/></linearGradient><pattern id="pB" width="12" height="14" patternUnits="userSpaceOnUse"><rect x="3" y="4" width="5" height="6" fill="#e6c987" opacity=".75"/></pattern></defs>
+<rect width="400" height="300" fill="url(#gB)"/><circle cx="320" cy="60" r="22" fill="#f2ede4" opacity=".92"/>
+<g fill="#0a1426"><rect x="10" y="150" width="56" height="150"/><rect x="74" y="105" width="48" height="195"/><rect x="130" y="170" width="60" height="130"/><rect x="198" y="80" width="52" height="220"/><rect x="258" y="140" width="64" height="160"/><rect x="330" y="115" width="60" height="185"/></g>
+<g fill="url(#pB)"><rect x="10" y="150" width="56" height="150"/><rect x="74" y="105" width="48" height="195"/><rect x="130" y="170" width="60" height="130"/><rect x="198" y="80" width="52" height="220"/><rect x="258" y="140" width="64" height="160"/><rect x="330" y="115" width="60" height="185"/></g>
+<rect y="272" width="400" height="28" fill="#070e1c"/><rect x="190" y="276" width="20" height="6" rx="3" fill="#4fd1b5"/></symbol>
+<symbol id="sC" viewBox="0 0 400 300"><defs><linearGradient id="gC" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0b1530"/><stop offset="1" stop-color="#3a3f73"/></linearGradient></defs>
+<rect width="400" height="300" fill="url(#gC)"/><path d="M0 150C80 135 140 140 200 138S330 130 400 145V300H0Z" fill="#0a1226"/>
+<polygon points="185,140 215,140 400,300 0,300" fill="#121a30"/><g stroke="#e6c987" stroke-width="3" stroke-dasharray="14 12" opacity=".85"><line x1="200" y1="140" x2="200" y2="300"/></g>
+<g stroke-linecap="round" stroke-width="3"><line x1="190" y1="150" x2="40" y2="290" stroke="#f2ede4" opacity=".7"/><line x1="210" y1="150" x2="360" y2="290" stroke="#e6c987" opacity=".8"/><line x1="195" y1="145" x2="110" y2="290" stroke="#ff5d7a" opacity=".55"/><line x1="205" y1="145" x2="290" y2="290" stroke="#4fd1b5" opacity=".6"/></g></symbol>
+</defs></svg>
 
-    <header>
-        <h1>My First Flask Website</h1>
-        <p>Welcome to my website!</p>
-    </header>
+<div id="intro">
+  <div class="stars"></div>
+  <button id="skip">Skip intro</button>
+  <div class="ground"></div><div class="pad"></div><div class="charger"></div><div class="beam"></div>
+  <svg class="vehicle" viewBox="0 0 300 100" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="bd" x1="0" x2="1"><stop offset="0" stop-color="#b8893f"/><stop offset=".5" stop-color="#d9b878"/><stop offset="1" stop-color="#e6c987"/></linearGradient>
+      <linearGradient id="gl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#bff6ff"/><stop offset="1" stop-color="#17325e"/></linearGradient>
+    </defs>
+    <ellipse cx="150" cy="88" rx="125" ry="7" fill="#e6c987" opacity=".35"/>
+    <path d="M12 68C14 52 40 46 82 42 108 22 150 18 186 24 222 30 252 44 280 56 292 62 294 68 290 72L18 72C12 72 11 71 12 68Z" fill="url(#bd)"/>
+    <path d="M96 44C118 30 150 28 180 31 204 34 224 44 238 52L96 52Z" fill="url(#gl)" opacity=".92"/>
+    <path d="M168 31L176 52" stroke="#0b1424" stroke-width="3"/>
+    <path d="M22 62L286 62" stroke="#fff" stroke-opacity=".5" stroke-width="1.5"/>
+    <path d="M274 54L292 60L274 62Z" fill="#fff"/>
+    <rect x="12" y="58" width="12" height="5" rx="2" fill="#ff3d71"/>
+    <circle cx="72" cy="74" r="15" fill="#0a0f1d" stroke="#e6c987" stroke-width="3"/><circle cx="72" cy="74" r="5" fill="#e6c987"/>
+    <circle cx="228" cy="74" r="15" fill="#0a0f1d" stroke="#e6c987" stroke-width="3"/><circle cx="228" cy="74" r="5" fill="#e6c987"/>
+  </svg>
+  <div class="hud"><small id="status">Initializing flight systems</small><div class="pct"><span id="pct">0</span>%</div><div class="bar"><i id="fill"></i></div></div>
+</div>
 
-    <main>
-        <h2>Hello!</h2>
-        <p>My first website is working successfully.</p>
-        <button onclick="alert('Website is working!')">
-            Click Me
-        </button>
-    </main>
+<div class="bg"><div class="orb"></div><div class="orb o2"></div></div>
 
+<nav>
+  <a href="#home" class="logo">EV<span>.</span>SUITE</a>
+  <ul><li><a href="#personas">Personas</a></li><li><a href="#network">Network</a></li><li><a href="#gallery">Gallery</a></li><li><a href="#dashboards">Dashboards</a></li><li><a href="#story">Story</a></li></ul>
+  <div class="battery"><div class="cell"><i id="sbat"></i></div><span id="spct">0%</span></div>
+</nav>
+
+<main>
+<section id="home">
+  <div class="hl">
+    <span class="tag rv">Data analytics project, 2026</span>
+    <h1 class="rv">The future of <span class="grad">electric mobility</span>, decoded.</h1>
+    <p class="lead rv">An interactive EV market analysis built in Tableau: three analyst perspectives and one guided data story.</p>
+    <div class="cta rv"><a href="#dashboards" class="btn p">Explore dashboards</a><a href="#story" class="btn">Watch the story</a></div>
+    <div class="chips rv">
+      <div class="chip glass"><b data-n="3">3</b><span>Dashboards</span></div>
+      <div class="chip glass"><b data-n="3">3</b><span>Personas</span></div>
+      <div class="chip glass"><b data-n="1">1</b><span>Data story</span></div>
+    </div>
+  </div>
+  <div class="hr rv"><div class="heroph glass"><div class="ph"><svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice"><use href="#sA"/></svg><img class="real" data-k="hero" alt="Electric vehicle charging"></div>
+    <div class="tagchip glass"><span>Charging</span><div class="mb"><i></i></div></div></div></div>
+</section>
+
+<section id="personas">
+  <span class="tag rv">One market, three minds</span>
+  <h2 class="rv">Same data. <span class="grad">Different decisions.</span></h2>
+  <p class="lead rv">Each dashboard is built around a decision-maker, so the EV data answers a different question for each.</p>
+  <div class="grid">
+    <div class="card glass rv"><div class="ic">📈</div><h3>Emily · Market Strategy</h3><p>Where is the market heading, and where should a brand compete?</p></div>
+    <div class="card glass rv"><div class="ic">🧠</div><h3>David · Business Intelligence</h3><p>Which numbers drive performance, growth and smarter decisions?</p></div>
+    <div class="card glass rv"><div class="ic">🌱</div><h3>Sarah · Sustainable Mobility</h3><p>How does the shift to EVs shape a cleaner, greener future?</p></div>
+  </div>
+</section>
+
+<section id="network">
+  <span class="tag rv">Charging network</span>
+  <h2 class="rv">Power, <span class="grad">in motion</span></h2>
+  <p class="lead rv">A vehicle crosses the grid, topping up at every station. Scroll here to watch it run.</p>
+  <div class="net glass rv" id="net">
+    <svg viewBox="0 0 900 260" preserveAspectRatio="xMidYMid meet">
+      <defs><linearGradient id="nb" x1="0" x2="1"><stop offset="0" stop-color="#b8893f"/><stop offset=".6" stop-color="#e6c987"/><stop offset="1" stop-color="#f6ecd0"/></linearGradient></defs>
+      <g fill="rgba(255,255,255,.07)"><rect x="30" y="130" width="60" height="95"/><rect x="100" y="90" width="50" height="135"/><rect x="230" y="120" width="70" height="105"/><rect x="330" y="80" width="46" height="145"/><rect x="520" y="110" width="64" height="115"/><rect x="610" y="70" width="52" height="155"/><rect x="760" y="125" width="70" height="100"/></g>
+      <g fill="#e6c987" class="win"><rect x="112" y="105" width="6" height="8"/><rect x="128" y="125" width="6" height="8"/><rect x="342" y="98" width="6" height="8"/><rect x="356" y="130" width="6" height="8"/><rect x="622" y="90" width="6" height="8"/><rect x="638" y="118" width="6" height="8"/><rect x="250" y="140" width="6" height="8"/><rect x="540" y="130" width="6" height="8"/></g>
+      <line x1="0" y1="226" x2="900" y2="226" stroke="#e6c987" stroke-opacity=".6" stroke-width="2"/>
+      <line x1="0" y1="238" x2="900" y2="238" stroke="#4fd1b5" stroke-width="2" stroke-dasharray="10 14" class="flow"/>
+      <g><rect x="187" y="168" width="14" height="58" rx="4" fill="#26365a"/><circle cx="194" cy="178" r="5" fill="#4fd1b5" class="led"/><circle cx="194" cy="178" r="5" fill="none" stroke="#4fd1b5" class="rg"/></g>
+      <g><rect x="443" y="168" width="14" height="58" rx="4" fill="#26365a"/><circle cx="450" cy="178" r="5" fill="#4fd1b5" class="led"/><circle cx="450" cy="178" r="5" fill="none" stroke="#4fd1b5" class="rg" style="animation-delay:.5s"/></g>
+      <g><rect x="723" y="168" width="14" height="58" rx="4" fill="#26365a"/><circle cx="730" cy="178" r="5" fill="#4fd1b5" class="led"/><circle cx="730" cy="178" r="5" fill="none" stroke="#4fd1b5" class="rg" style="animation-delay:1s"/></g>
+      <g class="ncar"><g transform="translate(0,188) scale(.42)"><path d="M12 68C14 52 40 46 82 42 108 22 150 18 186 24 222 30 252 44 280 56 292 62 294 68 290 72L18 72C12 72 11 71 12 68Z" fill="url(#nb)"/><path d="M96 44C118 30 150 28 180 31 204 34 224 44 238 52L96 52Z" fill="#17325e" opacity=".9"/><circle cx="72" cy="74" r="15" fill="#0a0f1d" stroke="#4fd1b5" stroke-width="4"/><circle cx="228" cy="74" r="15" fill="#0a0f1d" stroke="#4fd1b5" stroke-width="4"/></g></g>
+    </svg>
+    <div class="netbar"><span>Battery along the route</span><div class="mb"><i></i></div></div>
+  </div>
+</section>
+
+<section id="gallery">
+  <span class="tag rv">The EV world</span>
+  <h2 class="rv">Where the data <span class="grad">meets the road</span></h2>
+  <p class="lead rv">Charging stations, cities and highways: the places this analysis is about.</p>
+  <div class="grid3">
+    <figure class="glass gf rv"><div class="ph"><svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice"><use href="#sA"/></svg><img class="real" data-k="a" alt="EV charging at dusk"></div><figcaption>Charging at dusk</figcaption></figure>
+    <figure class="glass gf rv"><div class="ph"><svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice"><use href="#sB"/></svg><img class="real" data-k="b" alt="Smart city skyline"></div><figcaption>The connected city</figcaption></figure>
+    <figure class="glass gf rv"><div class="ph"><svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice"><use href="#sC"/></svg><img class="real" data-k="c" alt="Highway at night"></div><figcaption>The open road</figcaption></figure>
+  </div>
+</section>
+
+<section id="dashboards">
+  <span class="tag rv">Live dashboards</span>
+  <h2 class="rv">Interactive <span class="grad">command center</span></h2>
+  <p class="lead rv">Pick a persona. The dashboard loads automatically. Filter, hover and click inside it.</p>
+  <div class="tabs rv">
+    <button class="tab on" data-k="0">📈 Emily</button>
+    <button class="tab" data-k="1">🧠 David</button>
+    <button class="tab" data-k="2">🌱 Sarah</button>
+  </div>
+  <div class="layout rv">
+    <aside class="side glass">
+      <h3 id="sName"></h3><p class="q" id="sQ"></p><ul id="sTips"></ul>
+      <a class="btn p" id="sOpen" target="_blank" rel="noopener">Open in Tableau</a>
+    </aside>
+    <div class="frame glass">
+      <div class="fbar"><span id="fTitle"></span>
+        <div class="ctl"><button class="mini on" data-h="800px">Compact</button><button class="mini" data-h="1100px">Tall</button><button class="mini" id="fsD">Fullscreen</button></div>
+      </div>
+      <div class="stage" id="stageD"><div class="loader" id="ldD"><div class="ring"></div><span>Loading dashboard from Tableau Public…<br>Large workbooks can take 10 to 30 seconds.</span></div></div>
+      <p class="note">Not showing? <a id="noteD" target="_blank" rel="noopener">Open it directly in Tableau</a></p>
+    </div>
+  </div>
+</section>
+
+<section id="story">
+  <span class="tag rv">Guided narrative</span>
+  <h2 class="rv">The EV <span class="grad">data story</span></h2>
+  <p class="lead rv">Use the story points at the top of the viz to move through the insights one by one.</p>
+  <div class="frame glass rv">
+    <div class="fbar"><span>Story 1 · EV market narrative</span>
+      <div class="ctl"><button class="mini on" data-hs="800px">Compact</button><button class="mini" data-hs="1100px">Tall</button><button class="mini" id="fsS">Fullscreen</button><a class="mini" id="storyOpen" target="_blank" rel="noopener">Open</a></div>
+    </div>
+    <div class="stage" id="stageS"><div class="loader" id="ldS"><div class="ring"></div><span>Loading story from Tableau Public…</span></div></div>
+    <p class="note">Not showing? <a id="noteS" target="_blank" rel="noopener">Open it directly in Tableau</a></p>
+  </div>
+</section>
+</main>
+
+<div class="finale" id="finale">
+  <div class="fin-text">Journey complete · Battery 100%</div>
+  <div class="road"></div><div class="arr"></div>
+  <svg class="car2" viewBox="0 0 300 100" xmlns="http://www.w3.org/2000/svg">
+    <defs><linearGradient id="fb" x1="0" x2="1"><stop offset="0" stop-color="#b8893f"/><stop offset=".6" stop-color="#e6c987"/><stop offset="1" stop-color="#f6ecd0"/></linearGradient></defs>
+    <path d="M12 68C14 52 40 46 82 42 108 22 150 18 186 24 222 30 252 44 280 56 292 62 294 68 290 72L18 72C12 72 11 71 12 68Z" fill="url(#fb)"/>
+    <path d="M96 44C118 30 150 28 180 31 204 34 224 44 238 52L96 52Z" fill="#17325e" opacity=".9"/>
+    <path d="M22 62L286 62" stroke="#fff" stroke-opacity=".5" stroke-width="1.5"/>
+    <path d="M274 54L292 60L274 62Z" fill="#fff"/>
+    <circle cx="72" cy="74" r="15" fill="#0a0f1d" stroke="#4fd1b5" stroke-width="3"/><circle cx="228" cy="74" r="15" fill="#0a0f1d" stroke="#4fd1b5" stroke-width="3"/>
+  </svg>
+</div>
+<footer>
+  <p>Built with Tableau, HTML, CSS and JavaScript</p>
+  <p style="margin-top:6px">Designed and analysed by <b>Devesh</b> · EV Market Strategy Suite 2026</p>
+  <p style="margin-top:10px"><a id="replay">Replay intro</a></p>
+</footer>
+
+<script>
+/* ===== YOUR LINKS (exactly as provided) ===== */
+const LINKS={
+ emily:"https://public.tableau.com/views/EV_Market_Strategy_Suite_2026_3_4GB_FinalDeveshgod/01Emily-MarketStrategy?:language=en-US&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link",
+ david:"https://public.tableau.com/views/EV_Market_Strategy_Suite_2026_3_4GB_FinalDeveshgod/02David-BusinessIntelligence?:language=en-US&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link",
+ sarah:"https://public.tableau.com/views/EV_Market_Strategy_Suite_2026_3_4GB_FinalDeveshgod/03Sarah-SustainableMobility?:language=en-US&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link",
+ story:"https://public.tableau.com/views/EV_Market_Strategy_Suite_2026_3_4GB_FinalDeveshgod/Story1?:language=en-US&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link"
+};
+const embed=l=>l.split('?')[0]+"?:embed=y&:showVizHome=no&:display_count=n&:toolbar=yes&:language=en-US";
+const DASH=[
+ {k:"emily",n:"Emily · Market Strategy",q:"Where is the EV market heading, and where should a brand compete?",t:["Filter by region or segment","Compare brands and trends","Click a mark to cross-filter"]},
+ {k:"david",n:"David · Business Intelligence",q:"Which metrics drive performance, growth and better decisions?",t:["Scan the KPIs first","Hover for exact values","Use filters to drill down"]},
+ {k:"sarah",n:"Sarah · Sustainable Mobility",q:"How does the shift to EVs shape a cleaner, greener future?",t:["Look for sustainability trends","Compare regions","Hover charts for detail"]}
+];
+const $=id=>document.getElementById(id);
+
+/* ===== INTRO ===== */
+const intro=$('intro');let done=false,tm=[],last=-1;
+const reveal=()=>document.querySelectorAll('#home .rv').forEach((e,i)=>setTimeout(()=>e.classList.add('in'),130*i));
+function count(){document.querySelectorAll('[data-n]').forEach(el=>{const n=+el.dataset.n;let i=0;el.textContent=0;const id=setInterval(()=>{el.textContent=++i;if(i>=n)clearInterval(id)},330)})}
+function finish(){if(done)return;done=true;tm.forEach(clearTimeout);intro.classList.add('done');document.body.style.overflow='';try{sessionStorage.setItem('evIntro','1')}catch(e){}reveal();count();setTimeout(()=>intro.style.display='none',900)}
+function charge(ms){const t0=performance.now();(function s(t){if(done)return;const p=Math.min((t-t0)/ms,1),v=Math.round(p*100);if(v!==last){last=v;$('pct').textContent=v;$('fill').style.transform='scaleX('+p+')'}if(p<1)requestAnimationFrame(s);else $('status').textContent='Fully charged · launching'})(t0)}
+function run(){done=false;last=-1;intro.style.display='';intro.style.animation='none';intro.className='';document.body.style.overflow='hidden';
+ tm=[setTimeout(()=>{intro.classList.add('fly');$('status').textContent='Approaching charging station'},300),
+     setTimeout(()=>{intro.classList.remove('fly');intro.classList.add('show','charging');$('status').textContent='Charging…';charge(3000)},2200),
+     setTimeout(()=>{intro.classList.remove('charging');intro.classList.add('takeoff')},5500),
+     setTimeout(finish,6700)]}
+$('skip').onclick=finish;
+$('replay').onclick=()=>{scrollTo(0,0);$('fill').style.transform='scaleX(0)';$('pct').textContent=0;document.querySelectorAll('#home .rv').forEach(e=>e.classList.remove('in'));run()};
+let seen=false;try{seen=!!sessionStorage.getItem('evIntro')}catch(e){}
+if(seen){intro.style.display='none';done=true;reveal();count()}else run();
+setTimeout(()=>document.querySelectorAll('.rv').forEach(e=>e.classList.add('in')),9500);
+
+/* ===== VIZ LOADER (auto-loads when near viewport) ===== */
+function mount(stage,loader,url){
+  stage.querySelectorAll('iframe').forEach(f=>f.remove());loader.classList.remove('off');
+  const f=document.createElement('iframe');f.title='Tableau visualization';f.allowFullscreen=true;
+  f.onload=()=>{f.classList.add('ready');loader.classList.add('off')};
+  f.src=embed(url);stage.appendChild(f);
+}
+let cur=0,dLoaded=false,sLoaded=false;
+function info(){const d=DASH[cur],u=LINKS[d.k];$('sName').textContent=d.n;$('fTitle').textContent=d.n;$('sQ').textContent=d.q;
+ $('sTips').innerHTML=d.t.map(x=>'<li>'+x+'</li>').join('');$('sOpen').href=u;$('noteD').href=u}
+info();
+$('storyOpen').href=LINKS.story;$('noteS').href=LINKS.story;
+document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{
+ document.querySelectorAll('.tab').forEach(x=>x.classList.remove('on'));b.classList.add('on');
+ cur=+b.dataset.k;info();mount($('stageD'),$('ldD'),LINKS[DASH[cur].k]);dLoaded=true});
+const lz=new IntersectionObserver(es=>es.forEach(e=>{
+ if(!e.isIntersecting)return;
+ if(e.target.id==='stageD'&&!dLoaded){dLoaded=true;mount($('stageD'),$('ldD'),LINKS[DASH[cur].k])}
+ if(e.target.id==='stageS'&&!sLoaded){sLoaded=true;mount($('stageS'),$('ldS'),LINKS.story)}
+}),{rootMargin:'300px'});
+lz.observe($('stageD'));lz.observe($('stageS'));
+
+document.querySelectorAll('[data-h]').forEach(b=>b.onclick=()=>{document.querySelectorAll('[data-h]').forEach(x=>x.classList.remove('on'));b.classList.add('on');$('stageD').style.setProperty('--h',b.dataset.h)});
+document.querySelectorAll('[data-hs]').forEach(b=>b.onclick=()=>{document.querySelectorAll('[data-hs]').forEach(x=>x.classList.remove('on'));b.classList.add('on');$('stageS').style.setProperty('--h',b.dataset.hs)});
+const fs=el=>{const f=el.requestFullscreen||el.webkitRequestFullscreen;if(f)f.call(el)};
+$('fsD').onclick=()=>fs($('stageD'));$('fsS').onclick=()=>fs($('stageS'));
+
+/* ===== SCROLL: reveal, battery, active nav ===== */
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.1});
+document.querySelectorAll('.rv').forEach(el=>{if(!el.closest('#home'))io.observe(el)});
+const ln=[...document.querySelectorAll('nav ul a')],sc=ln.map(a=>document.querySelector(a.getAttribute('href')));let tk=false;
+function onS(){const h=document.documentElement.scrollHeight-innerHeight,p=h>0?Math.min(1,scrollY/h):0;
+ $('sbat').style.transform='scaleX('+p+')';$('spct').textContent=Math.round(p*100)+'%';
+ let a=-1;sc.forEach((s,i)=>{if(s&&s.getBoundingClientRect().top<innerHeight*.4)a=i});ln.forEach((l,i)=>l.classList.toggle('act',i===a));tk=false}
+addEventListener('scroll',()=>{if(!tk){tk=true;requestAnimationFrame(onS)}},{passive:true});onS();
+
+/* ===== CARD TILT (desktop) ===== */
+if(matchMedia('(hover:hover) and (pointer:fine)').matches){document.querySelectorAll('.card').forEach(c=>{
+ let r=null;c.addEventListener('mouseenter',()=>r=c.getBoundingClientRect());
+ c.addEventListener('mousemove',e=>{if(!r)return;const x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;c.style.transform='perspective(700px) rotateY('+x*8+'deg) rotateX('+-y*8+'deg) translateY(-3px)'});
+ c.addEventListener('mouseleave',()=>{c.style.transform='';r=null})})}
+
+const fin=$('finale');
+new IntersectionObserver(es=>es.forEach(e=>fin.classList.toggle('go',e.isIntersecting)),{threshold:.6}).observe(fin);
+
+/* ===== PHOTO SLOTS: paste your own photo paths/URLs here (empty = illustrated scene) ===== */
+const PHOTOS={hero:"",a:"",b:"",c:""};
+document.querySelectorAll('img.real').forEach(im=>{const u=PHOTOS[im.dataset.k];if(!u)return;im.onload=()=>im.classList.add('ok');im.src=u});
+const net=$('net');
+new IntersectionObserver(es=>es.forEach(e=>net.classList.toggle('go',e.isIntersecting)),{threshold:.3}).observe(net);
+</script>
 </body>
 </html>
